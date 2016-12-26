@@ -1,5 +1,6 @@
 package com.klevytska.dm.repository;
 
+import com.klevytska.dm.model.MessageMapping;
 import com.klevytska.dm.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +27,15 @@ public class UserRepository {
     public User getById(long id){
         logger.info("Get by id: " + id);
         return entityManager.find(User.class, id);
+    }
+
+    public User getByDomainName(String domainName){
+        logger.info("Get by domainName: " + domainName);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> element = criteriaQuery.from(User.class);
+        criteriaQuery.select(element).where(criteriaBuilder.equal(element.get("domain_name"), domainName));
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 
     public List<User> getAll(){

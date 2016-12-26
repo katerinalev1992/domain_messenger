@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @XmlRootElement
 @Entity
-@Table(name="message_mapping")
+@Table(name="messenger_map")
 public class MessageMapping implements Serializable{
 
     @Id
